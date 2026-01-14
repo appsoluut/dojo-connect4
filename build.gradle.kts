@@ -7,7 +7,7 @@ plugins {
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("com.appsoluut.connect4.Connect4")
 }
 
 repositories {
