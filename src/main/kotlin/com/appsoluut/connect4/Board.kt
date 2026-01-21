@@ -13,9 +13,12 @@ class Board private constructor(
     fun isEmpty(): Boolean = positions.all { it.isEmpty }
 
     companion object {
+        const val ROWS = 6
+        const val COLUMNS = 7
+
         fun empty(
-            rows: Int = 6,
-            columns: Int = 7,
+            rows: Int = ROWS,
+            columns: Int = COLUMNS,
         ): Board =
             Board(
                 rows = rows,

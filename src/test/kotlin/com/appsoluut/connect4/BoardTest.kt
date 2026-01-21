@@ -24,8 +24,8 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("have all 42 available for coin placement")
-    fun have42Positions() {
+    @DisplayName("have all positions available for coin placement")
+    fun areAllPositionsAvailableForCoin() {
         val board = Board.empty()
         for (row in 0 until board.rows) {
             for (column in 0 until board.columns) {
