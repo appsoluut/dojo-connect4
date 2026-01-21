@@ -2,6 +2,8 @@ package com.appsoluut.connect4
 
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -33,5 +35,23 @@ class BoardTest {
     fun hasAllPositionsEmpty() {
         val board = Board()
         assertTrue(board.positions.all { it.isEmpty })
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "0,0",
+        "1,2",
+    )
+    @DisplayName("have all positions know their row and column")
+    fun allPositionsReferenceRowAndColumn(
+        row: Int,
+        column: Int,
+    ) {
+        val board = Board()
+
+        val position = board.positionAt(row = row, column = column)
+
+        assertEquals(row, position.row)
+        assertEquals(column, position.column)
     }
 }

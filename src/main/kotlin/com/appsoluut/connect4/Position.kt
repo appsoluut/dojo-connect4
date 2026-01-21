@@ -1,5 +1,7 @@
 package com.appsoluut.connect4
 
-class Position {
-    val isEmpty = true
-}
+data class Position(
+    val column: Int,
+    val row: Int,
+    val isEmpty: Boolean = true,
+)
