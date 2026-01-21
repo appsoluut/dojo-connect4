@@ -1,3 +1,5 @@
 package com.appsoluut.connect4
 
-class Position
+class Position {
+    val isEmpty = true
+}

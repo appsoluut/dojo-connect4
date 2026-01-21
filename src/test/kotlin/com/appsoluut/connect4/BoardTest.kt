@@ -3,6 +3,7 @@ package com.appsoluut.connect4
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @DisplayName("Board should")
 class BoardTest {
@@ -25,5 +26,12 @@ class BoardTest {
     fun have42Positions() {
         val board = Board()
         assertEquals(42, board.positions.size)
+    }
+
+    @Test
+    @DisplayName("have all positions empty when new game starts")
+    fun hasAllPositionsEmpty() {
+        val board = Board()
+        assertTrue(board.positions.all { it.isEmpty })
     }
 }
