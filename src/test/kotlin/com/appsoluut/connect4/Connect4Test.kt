@@ -9,7 +9,7 @@ class Connect4Test {
     @Test
     @DisplayName("create a empty board when new game starts")
     fun emptyBoardOnNewGame() {
-        val game = Connect4()
+        val game = Connect4.newGame()
         assertNotNull(game.board)
     }
 }
