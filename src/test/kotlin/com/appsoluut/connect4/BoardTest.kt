@@ -2,7 +2,6 @@ package com.appsoluut.connect4
 
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import kotlin.test.assertEquals
@@ -30,9 +29,7 @@ class BoardTest {
         val board = Board.empty()
         for (row in 0 until board.rows) {
             for (column in 0 until board.columns) {
-                assertDoesNotThrow {
-                    board.positionAt(row, column)
-                }
+                assertTrue(board.positionAt(row, column).isEmpty)
             }
         }
     }
