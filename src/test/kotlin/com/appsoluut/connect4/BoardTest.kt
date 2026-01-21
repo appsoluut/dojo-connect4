@@ -19,4 +19,11 @@ class BoardTest {
         val board = Board()
         assertEquals(7, board.columns)
     }
+
+    @Test
+    @DisplayName("have 42 positions")
+    fun have42Positions() {
+        val board = Board()
+        assertEquals(42, board.positions.size)
+    }
 }
