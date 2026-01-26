@@ -24,12 +24,12 @@ class Board private constructor(
                 rows = rows,
                 columns = columns,
                 positions =
-                    List(rows * columns) {
-                        Position(
-                            column = it % columns,
-                            row = it / columns,
-                        )
-                    },
+                List(rows * columns) {
+                    Position(
+                        column = it % columns,
+                        row = it / columns,
+                    )
+                },
             )
     }
 }
