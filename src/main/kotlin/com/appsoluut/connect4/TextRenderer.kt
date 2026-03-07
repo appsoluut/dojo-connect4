@@ -7,4 +7,13 @@ class TextRenderer : Renderer {
             Coin.Blue -> "\uD83D\uDD34"
             else -> "◯"
         }
+
+    override fun renderBoard(board: Board): String {
+        val boardColumns =
+            (1..board.columns)
+                .joinToString(" ") { it.toString().padStart(3, ' ') }
+                .padStart(board.columns * 3 - 1, ' ')
+
+        return boardColumns
+    }
 }

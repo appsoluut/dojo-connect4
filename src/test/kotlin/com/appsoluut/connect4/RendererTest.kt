@@ -1,9 +1,11 @@
 package com.appsoluut.connect4
 
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @DisplayName("Renderer should")
 class RendererTest {
@@ -38,5 +40,16 @@ class RendererTest {
             }
 
         assertEquals(expectedCoin, renderer.renderCoin(coin))
+    }
+
+    @Test
+    @DisplayName("show board with column numbers 1 to 7")
+    fun columnNumbers1To7Test() {
+        val renderer = TextRenderer()
+        val expectedColumns = "1   2   3   4   5   6   7"
+
+        val actualRendering = renderer.renderBoard(Board.empty()).trim()
+
+        assertTrue(actualRendering.contains(expectedColumns))
     }
 }
