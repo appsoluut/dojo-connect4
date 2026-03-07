@@ -1,5 +1,7 @@
 .gradle
 /build
 /.idea
+/.kotlin
 *.iml
 /out
+gradle.properties

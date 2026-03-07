@@ -5,5 +5,11 @@ class Connect4 private constructor(
 ) {
     companion object {
         fun newGame(): Connect4 = Connect4(Board.empty())
+
+        @JvmStatic
+        fun main(args: Array<String>) {
+            val game = newGame()
+            println(game)
+        }
     }
 }

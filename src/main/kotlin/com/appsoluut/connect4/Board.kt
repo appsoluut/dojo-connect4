@@ -10,7 +10,21 @@ class Board private constructor(
         column: Int,
     ): Position = positions[row * columns + column]
 
-    fun isEmpty(): Boolean = positions.all { it.isEmpty }
+    fun isEmpty(): Boolean = positions.all { it.coin == null }
+
+    fun placeCoinAt(position: Position): Board {
+        val mutablePositions = positions.toMutableList()
+        mutablePositions.set(
+            index = position.row * columns + position.column,
+            element = position.copy(coin = Coin.Yellow)
+        )
+        return Board(rows, columns, mutablePositions.toList())
+    }
+
+    fun isPositionAvailableAt(
+        row: Int,
+        column: Int,
+    ): Boolean = positions[row * columns + column].coin == null
 
     companion object {
         const val ROWS = 6
@@ -28,6 +42,7 @@ class Board private constructor(
                         Position(
                             column = it % columns,
                             row = it / columns,
+                            coin = null,
                         )
                     },
             )

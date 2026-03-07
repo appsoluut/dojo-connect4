@@ -29,7 +29,7 @@ class BoardTest {
         val board = Board.empty()
         for (row in 0 until board.rows) {
             for (column in 0 until board.columns) {
-                assertTrue(board.positionAt(row, column).isEmpty)
+                assertTrue(board.isPositionAvailableAt(row = row, column = column))
             }
         }
     }
@@ -57,5 +57,29 @@ class BoardTest {
 
         assertEquals(row, position.row)
         assertEquals(column, position.column)
+    }
+
+    @Test
+    @DisplayName("contain player 1's coin in column 1, row 1")
+    fun boardContainsPlayer1CoinAt1_1() {
+        val board = Board.empty()
+        val expectedPosition =
+            Position(
+                row = 1,
+                column = 1,
+                coin = Coin.Yellow,
+            )
+
+        val updatedBoard = board.placeCoinAt(
+            position =
+                Position(
+                    row = 1,
+                    column = 1,
+                    coin = Coin.Yellow,
+                ),
+        )
+        val position = updatedBoard.positionAt(row = expectedPosition.row, column = expectedPosition.column)
+
+        assertEquals(expectedPosition, position)
     }
 }
