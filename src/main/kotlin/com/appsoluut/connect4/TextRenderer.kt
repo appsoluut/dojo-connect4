@@ -5,6 +5,6 @@ class TextRenderer : Renderer {
         when (coin) {
             Coin.Yellow -> "\uD83D\uDFE1"
             Coin.Blue -> "\uD83D\uDD34"
-            null -> "◯"
+            else -> "◯"
         }
 }
