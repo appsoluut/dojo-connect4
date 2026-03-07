@@ -16,7 +16,7 @@ class Board private constructor(
         val mutablePositions = positions.toMutableList()
         mutablePositions.set(
             index = position.row * columns + position.column,
-            element = position.copy(coin = Coin.Yellow)
+            element = position.copy(coin = Coin.Yellow),
         )
         return Board(rows, columns, mutablePositions.toList())
     }

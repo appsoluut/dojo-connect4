@@ -70,14 +70,15 @@ class BoardTest {
                 coin = Coin.Yellow,
             )
 
-        val updatedBoard = board.placeCoinAt(
-            position =
-                Position(
-                    row = 1,
-                    column = 1,
-                    coin = Coin.Yellow,
-                ),
-        )
+        val updatedBoard =
+            board.placeCoinAt(
+                position =
+                    Position(
+                        row = 1,
+                        column = 1,
+                        coin = Coin.Yellow,
+                    ),
+            )
         val position = updatedBoard.positionAt(row = expectedPosition.row, column = expectedPosition.column)
 
         assertEquals(expectedPosition, position)
