@@ -3,8 +3,13 @@ package com.appsoluut.connect4
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtensionContext
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.ArgumentsProvider
+import org.junit.jupiter.params.provider.ArgumentsSource
 import org.junit.jupiter.params.provider.CsvSource
+import java.util.stream.Stream
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -94,28 +99,42 @@ class BoardTest {
         assertEquals(column, position.column)
     }
 
-    @Test
-    @DisplayName("contain player 1's coin in column 1, row 1")
-    fun boardContainsPlayer1CoinAt1_1() {
+    @ParameterizedTest(name = "{index} => contain {0} coin in column {2}, row {1}")
+    @ArgumentsSource(BoardPlayerPositionsArgumentsProvider::class)
+    @DisplayName("contain specific player coin in a position")
+    fun boardContainsCoinAt(
+        coin: Coin,
+        row: Int,
+        column: Int,
+    ) {
         val board = Board.empty()
         val expectedPosition =
             Position(
-                row = 1,
-                column = 1,
-                coin = Coin.Yellow,
+                row = row,
+                column = column,
+                coin = coin,
             )
 
         val updatedBoard =
             board.placeCoinAt(
                 position =
                     Position(
-                        row = 1,
-                        column = 1,
-                        coin = Coin.Yellow,
+                        row = row,
+                        column = column,
+                        coin = coin,
                     ),
             )
         val position = updatedBoard.positionAt(row = expectedPosition.row, column = expectedPosition.column)
 
         assertEquals(expectedPosition, position)
+    }
+
+    private class BoardPlayerPositionsArgumentsProvider : ArgumentsProvider {
+        override fun provideArguments(context: ExtensionContext?): Stream<out Arguments?>? {
+            return Stream.of(
+                Arguments.of(Coin.Yellow, 1, 1),
+                Arguments.of(Coin.Blue, 1, 2),
+            )
+        }
     }
 }
