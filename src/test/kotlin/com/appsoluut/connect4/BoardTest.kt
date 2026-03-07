@@ -1,5 +1,6 @@
 package com.appsoluut.connect4
 
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -39,6 +40,40 @@ class BoardTest {
     fun hasAllPositionsEmpty() {
         val board = Board.empty()
         assertTrue(board.isEmpty())
+    }
+
+    @Test
+    @DisplayName("have a non-empty board when a coin is occupying a space")
+    fun checkIfBoardIsNotEmptyWhenACoinOccupiesTheBoard() {
+        val board = Board.empty()
+        val updatedBoard =
+            board.placeCoinAt(
+                position =
+                    Position(
+                        row = 1,
+                        column = 1,
+                        coin = Coin.Yellow,
+                    ),
+            )
+
+        assertFalse(updatedBoard.isEmpty())
+    }
+
+    @Test
+    @DisplayName("have an unavailable space when a coin is already occupying the position")
+    fun haveOccupiedSpaceAtPosition() {
+        val board = Board.empty()
+        val updatedBoard =
+            board.placeCoinAt(
+                position =
+                    Position(
+                        row = 1,
+                        column = 1,
+                        coin = Coin.Yellow,
+                    ),
+            )
+
+        assertFalse(updatedBoard.isPositionAvailableAt(row = 1, column = 1))
     }
 
     @ParameterizedTest
