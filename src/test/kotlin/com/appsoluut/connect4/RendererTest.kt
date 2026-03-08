@@ -52,4 +52,20 @@ class RendererTest {
 
         assertTrue(actualRendering.contains(expectedColumns))
     }
+
+    @Test
+    @DisplayName("show board with row numbers 6 to 1 (top to bottom)")
+    fun rowNumbers6To1Test() {
+        val renderer = TextRenderer()
+        val expectedRows = (1..6).reversed().toList()
+
+        val output = renderer.renderBoard(Board.empty()).lines()
+        println(output)
+        val actualRows =
+            output.drop(1).mapNotNull { line ->
+                line.trim().split("\\s+".toRegex())[0].toIntOrNull()
+            }
+
+        assertEquals(expectedRows, actualRows)
+    }
 }
