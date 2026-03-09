@@ -33,8 +33,8 @@ class RendererTest {
             )
 
         val expectedCoin =
-            playerCoinMap[player]?.let { coin ->
-                when (coin) {
+            playerCoinMap[player]?.let { playerCoin ->
+                when (playerCoin) {
                     Coin.Yellow -> "\uD83D\uDFE1"
                     Coin.Blue -> "\uD83D\uDD34"
                     Coin.None -> "\u2B55"
