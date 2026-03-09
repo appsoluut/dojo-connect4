@@ -28,7 +28,7 @@ class Board private constructor(
 
     companion object {
         const val ROWS = 6
-        const val COLUMNS = 7
+        const val COLUMNS = 8
 
         fun empty(
             rows: Int = ROWS,

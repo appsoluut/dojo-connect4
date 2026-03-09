@@ -18,8 +18,9 @@ class TextRenderer : Renderer {
     private fun generateColumnsHeader(board: Board): String {
         val header =
             (1..board.columns)
-                .joinToString(" ") { it.toString().padStart(3, ' ') }
+                .joinToString("/") { it.toString().plus(".").prependIndent(" ").padEnd(4, ' ') }
                 .padStart(board.columns * 3 - 1, ' ')
+                .prependIndent("   ")
         return header
     }
 
@@ -30,7 +31,7 @@ class TextRenderer : Renderer {
             output.append(row)
             output.append(". ")
             repeat(board.columns) { index ->
-                output.append(renderCoin(Coin.Yellow))
+                output.append(renderCoin(board.positionAt(0, 0).coin))
                 if (index != board.columns - 1) {
                     output.append(" | ")
                 }

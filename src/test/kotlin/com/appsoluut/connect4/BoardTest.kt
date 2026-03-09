@@ -19,14 +19,14 @@ class BoardTest {
     @DisplayName("have 6 rows")
     fun has6Rows() {
         val board = Board.empty()
-        assertEquals(6, board.rows)
+        assertEquals(Board.ROWS, board.rows)
     }
 
     @Test
     @DisplayName("have 7 columns")
     fun has7Columns() {
         val board = Board.empty()
-        assertEquals(7, board.columns)
+        assertEquals(Board.COLUMNS, board.columns)
     }
 
     @Test

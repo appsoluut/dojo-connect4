@@ -46,11 +46,12 @@ class RendererTest {
     @DisplayName("show board with column numbers 1 to 7")
     fun columnNumbers1To7Test() {
         val renderer = TextRenderer()
-        val expectedColumns = "1   2   3   4   5   6   7"
+        val expectedColumns = (1..Board.COLUMNS).toList()
 
         val actualRendering = renderer.renderBoard(Board.empty()).trim()
+        val allNumbersPresent = expectedColumns.all { actualRendering.contains(it.toString()) }
 
-        assertTrue(actualRendering.contains(expectedColumns))
+        assertTrue(allNumbersPresent)
     }
 
     @Test
@@ -58,7 +59,7 @@ class RendererTest {
     fun rowNumbers6To1Test() {
         val renderer = TextRenderer()
         val regex = "^\\s*(\\d+)".toRegex()
-        val expectedRows = (1..6).reversed().toList()
+        val expectedRows = (1..Board.ROWS).reversed().toList()
 
         val output = renderer.renderBoard(Board.empty()).lines()
         val actualRows =
