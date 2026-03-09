@@ -14,14 +14,14 @@ class RendererTest {
         value = [
             "1, Yellow",
             "2, Blue",
-            "null, null",
+            "NoPlayer, None",
         ],
-        nullValues = ["null"],
+        nullValues = ["NoPlayer"],
     )
     @DisplayName("display coins visibly distinct from other player's coins")
     fun distinctCoinsTest(
         player: Int?,
-        coin: Coin?,
+        coin: Coin,
     ) {
         val renderer = TextRenderer()
 
@@ -29,14 +29,16 @@ class RendererTest {
             mapOf(
                 1 to Coin.Yellow,
                 2 to Coin.Blue,
-                null to null,
+                null to Coin.None,
             )
 
         val expectedCoin =
-            when (playerCoinMap[player]) {
-                Coin.Yellow -> "\uD83D\uDFE1"
-                Coin.Blue -> "\uD83D\uDD34"
-                null -> "⭕"
+            playerCoinMap[player]?.let { coin ->
+                when (coin) {
+                    Coin.Yellow -> "\uD83D\uDFE1"
+                    Coin.Blue -> "\uD83D\uDD34"
+                    Coin.None -> "\u2B55"
+                }
             }
 
         assertEquals(expectedCoin, renderer.renderCoin(coin))

@@ -5,7 +5,7 @@ class TextRenderer : Renderer {
         when (coin) {
             Coin.Yellow -> "\uD83D\uDFE1"
             Coin.Blue -> "\uD83D\uDD34"
-            else -> "⭕"
+            else -> "\u2B55"
         }
 
     override fun renderBoard(board: Board): String {
@@ -20,8 +20,8 @@ class TextRenderer : Renderer {
             (1..board.columns)
                 .joinToString("/") { it.toString().plus(".").prependIndent(" ").padEnd(4, ' ') }
                 .padStart(board.columns * 3 - 1, ' ')
-                .prependIndent("   ")
-        return header
+                .prependIndent("    /")
+        return "$header/"
     }
 
     private fun generateBoardWithRowNumbers(board: Board): String {
@@ -31,10 +31,12 @@ class TextRenderer : Renderer {
             output.append(row)
             output.append(". ")
             repeat(board.columns) { index ->
-                output.append(renderCoin(board.positionAt(0, 0).coin))
-                if (index != board.columns - 1) {
-                    output.append(" | ")
+                if (index == 0) {
+                    output.append("|")
                 }
+                output.append(" ")
+                output.append(renderCoin(board.positionAt(0, 0).coin))
+                output.append(" |")
             }
             output.append('\n')
         }
