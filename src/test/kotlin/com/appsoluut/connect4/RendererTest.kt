@@ -36,7 +36,7 @@ class RendererTest {
             when (playerCoinMap[player]) {
                 Coin.Yellow -> "\uD83D\uDFE1"
                 Coin.Blue -> "\uD83D\uDD34"
-                null -> "◯"
+                null -> "⭕"
             }
 
         assertEquals(expectedCoin, renderer.renderCoin(coin))
