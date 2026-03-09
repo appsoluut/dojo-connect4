@@ -57,13 +57,13 @@ class RendererTest {
     @DisplayName("show board with row numbers 6 to 1 (top to bottom)")
     fun rowNumbers6To1Test() {
         val renderer = TextRenderer()
+        val regex = "^\\s*(\\d+)".toRegex()
         val expectedRows = (1..6).reversed().toList()
 
         val output = renderer.renderBoard(Board.empty()).lines()
-        println(output)
         val actualRows =
             output.drop(1).mapNotNull { line ->
-                line.trim().split("\\s+".toRegex())[0].toIntOrNull()
+                regex.find(line)?.groupValues?.get(1)?.toIntOrNull()
             }
 
         assertEquals(expectedRows, actualRows)

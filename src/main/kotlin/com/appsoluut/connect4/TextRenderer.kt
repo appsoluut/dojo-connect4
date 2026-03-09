@@ -17,14 +17,18 @@ class TextRenderer : Renderer {
 
         output.append(boardColumns).append('\n')
         for (row in board.rows downTo 1) {
-            output.append(row)
             output.append(' ')
-            repeat(board.columns) {
-                output.append(Coin.Yellow)
+            output.append(row)
+            output.append(". ")
+            repeat(board.columns) { index ->
+                output.append(renderCoin(Coin.Yellow))
+                if (index != board.columns - 1) {
+                    output.append(" | ")
+                }
             }
             output.append('\n')
         }
 
-        return output.toString()
+        return output.toString().trimEnd()
     }
 }
