@@ -9,7 +9,7 @@ class OutputTest {
     @Test
     @DisplayName("contain a coin in column 4 when input is accepted")
     fun containCoinInColumnAfterInput() {
-        val input = FakeInput(input = 4)
+        val input = TerminalInput({ "4" })
         val output = FakeOutput()
         val renderer = TextRenderer()
         val game =
@@ -43,7 +43,7 @@ class OutputTest {
     @Test
     @DisplayName("contain an error when invalid column was selected")
     fun displayErrorForInvalidColumn() {
-        val input = FakeInput(input = 0)
+        val input = TerminalInput({ "0" })
         val output = FakeOutput()
         val game =
             Connect4.newGame(
@@ -54,9 +54,5 @@ class OutputTest {
         game.runGameLoop(2)
 
         assertTrue(output.buffer.contains("[ERROR]", ignoreCase = true), "Output was:\n\n${output.buffer}")
-    }
-
-    private class FakeInput(val input: Int) : Input {
-        override fun readColumn(): Int? = input
     }
 }

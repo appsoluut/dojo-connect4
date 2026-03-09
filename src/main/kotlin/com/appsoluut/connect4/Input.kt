@@ -4,6 +4,6 @@ interface Input {
     fun readColumn(): Int?
 }
 
-class TerminalInput : Input {
-    override fun readColumn(): Int? = readln().toIntOrNull()
+class TerminalInput(private val inputProvider: () -> String? = ::readln) : Input {
+    override fun readColumn(): Int? = inputProvider()?.toIntOrNull()
 }
