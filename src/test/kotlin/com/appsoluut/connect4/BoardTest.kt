@@ -33,8 +33,8 @@ class BoardTest {
     @DisplayName("have all positions available for coin placement")
     fun areAllPositionsAvailableForCoin() {
         val board = Board.empty()
-        for (row in 0 until board.rows) {
-            for (column in 0 until board.columns) {
+        for (row in 1..board.rows) {
+            for (column in 1..board.columns) {
                 assertTrue(board.isPositionAvailableAt(row = row, column = column))
             }
         }
@@ -83,8 +83,8 @@ class BoardTest {
 
     @ParameterizedTest
     @CsvSource(
-        "0,0",
-        "1,2",
+        "1,1",
+        "2,3",
     )
     @DisplayName("have all positions know their row and column")
     fun allPositionsReferenceRowAndColumn(
@@ -92,11 +92,17 @@ class BoardTest {
         column: Int,
     ) {
         val board = Board.empty()
+        val expectedPosition =
+            Position(
+                row = row,
+                column = column,
+                coin = Coin.None,
+            )
 
-        val position = board.positionAt(row = row, column = column)
+        val actualPosition = board.positionAt(row = row, column = column)
 
-        assertEquals(row, position.row)
-        assertEquals(column, position.column)
+        assertEquals(expectedPosition.row, actualPosition.row)
+        assertEquals(expectedPosition.column, actualPosition.column)
     }
 
     @ParameterizedTest(name = "{index} => contain {0} coin in column {2}, row {1}")

@@ -29,13 +29,10 @@ class TextRenderer : Renderer {
         for (row in board.rows downTo 1) {
             output.append(' ')
             output.append(row)
-            output.append(". ")
-            repeat(board.columns) { index ->
-                if (index == 0) {
-                    output.append("|")
-                }
+            output.append(". |")
+            for (column in 1..board.columns) {
                 output.append(" ")
-                output.append(renderCoin(board.positionAt(0, 0).coin))
+                output.append(renderCoin(board.positionAt(row = row, column = column).coin))
                 output.append(" |")
             }
             output.append('\n')
