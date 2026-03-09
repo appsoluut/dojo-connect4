@@ -10,12 +10,21 @@ class TextRenderer : Renderer {
 
     override fun renderBoard(board: Board): String {
         val output = StringBuilder()
-        val boardColumns =
+        output.append(generateColumnsHeader(board)).append('\n')
+        output.append(generateBoardWithRowNumbers(board)).append('\n')
+        return output.toString().trimEnd()
+    }
+
+    private fun generateColumnsHeader(board: Board): String {
+        val header =
             (1..board.columns)
                 .joinToString(" ") { it.toString().padStart(3, ' ') }
                 .padStart(board.columns * 3 - 1, ' ')
+        return header
+    }
 
-        output.append(boardColumns).append('\n')
+    private fun generateBoardWithRowNumbers(board: Board): String {
+        val output = StringBuilder()
         for (row in board.rows downTo 1) {
             output.append(' ')
             output.append(row)
@@ -28,7 +37,6 @@ class TextRenderer : Renderer {
             }
             output.append('\n')
         }
-
         return output.toString().trimEnd()
     }
 }
