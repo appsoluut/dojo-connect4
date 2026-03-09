@@ -4,4 +4,6 @@ interface Renderer {
     fun renderCoin(coin: Coin): String
 
     fun renderBoard(board: Board): String
+
+    fun renderInstructions(board: Board): String
 }

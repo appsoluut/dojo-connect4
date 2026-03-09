@@ -24,8 +24,15 @@ class Connect4 private constructor(
         @JvmStatic
         fun main(args: Array<String>) {
             val game = newGame()
+            game.intro()
             game.runGameLoop()
         }
+    }
+
+    fun intro() {
+        output.clear()
+        output.println(renderer.renderInstructions(board))
+        input.readColumn()
     }
 
     fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS) {
