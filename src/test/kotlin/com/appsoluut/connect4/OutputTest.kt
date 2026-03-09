@@ -7,9 +7,43 @@ import kotlin.test.assertTrue
 @DisplayName("Output should")
 class OutputTest {
     @Test
+    @DisplayName("contain a coin in column 4 when input is accepted")
+    fun containCoinInColumnAfterInput() {
+        val input = FakeInput(input = 4)
+        val output = FakeOutput()
+        val renderer = TextRenderer()
+        val game =
+            Connect4.newGame(
+                input = input,
+                output = output,
+            )
+        val board = Board.empty()
+        val emptyBoard = renderer.renderBoard(board)
+
+        game.runGameLoop(1)
+        assertTrue(output.buffer.contains(emptyBoard))
+
+        val boardWithCoin =
+            board.placeCoinAt(
+                Position(
+                    column = 4,
+                    row = 1,
+                    coin = Coin.Yellow,
+                ),
+            )
+        val boardWithCoinInColumn = renderer.renderBoard(boardWithCoin)
+
+        game.runGameLoop(1)
+        assertTrue(
+            output.buffer.contains(boardWithCoinInColumn),
+            "Board doesn't contain coin:\n${output.buffer}\n\nvs:\n$boardWithCoinInColumn",
+        )
+    }
+
+    @Test
     @DisplayName("contain an error when invalid column was selected")
-    fun outputToTerminal() {
-        val input = FakeInput()
+    fun displayErrorForInvalidColumn() {
+        val input = FakeInput(input = 0)
         val output = FakeOutput()
         val game =
             Connect4.newGame(
@@ -22,8 +56,8 @@ class OutputTest {
         assertTrue(output.buffer.contains("[ERROR]", ignoreCase = true), "Output was:\n\n${output.buffer}")
     }
 
-    private class FakeInput : Input {
-        override fun readColumn(): Int? = 0
+    private class FakeInput(val input: Int) : Input {
+        override fun readColumn(): Int? = input
     }
 
     private class FakeOutput : Output {
