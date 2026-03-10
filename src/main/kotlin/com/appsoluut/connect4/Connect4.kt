@@ -10,6 +10,8 @@ class Connect4 private constructor(
     private val output: Output,
     private var board: Board,
 ) {
+    private var logged: Boolean = false
+
     companion object {
         const val INFINITE_ITERATIONS = -1
 
@@ -50,12 +52,11 @@ class Connect4 private constructor(
     }
 
     fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS): Boolean {
+        logged = false
         var message: String? = null
         var gameResult: GameResult = GameResult.Running
-        val history = GameHistory("./logs/history.log")
         var iterations = 0
         val winCondition = WinCondition()
-        var logged = false
         while (maxIterations == INFINITE_ITERATIONS || iterations < maxIterations) {
             val currentPlayer = turn.getCurrentPlayer()
 
@@ -71,13 +72,8 @@ class Connect4 private constructor(
                 }
 
             if (gameResult != GameResult.Running) {
-                if (result != null) {
-                    if (!logged) {
-                        history.record(result)
-                        logged = true
-                    }
-                    output.println(result)
-                }
+                logResult(result)
+                displayResult(result)
                 output.print("Play again? (yes/no): ")
                 val answer = input.readln()?.trim()?.lowercase()
                 return when (answer) {
@@ -87,9 +83,7 @@ class Connect4 private constructor(
                 }
             }
 
-            message?.let { error ->
-                output.println("\n>> $error <<\nTry again!\n")
-            }
+            displayError(message)
             message = null
 
             output.println(renderer.renderPlayerTurn(currentPlayer))
@@ -110,14 +104,44 @@ class Connect4 private constructor(
 
                 updateBoard(moveResult.board)
 
-                gameResult = winCondition.check(moveResult.board, moveResult.position)
-                if (gameResult == GameResult.Running) {
-                    turn.advance()
-                }
+                gameResult = checkGameCondition(winCondition, moveResult)
             }
             iterations++
         }
         return false
+    }
+
+    private fun logResult(result: String?) {
+        if (result == null || logged) {
+            return
+        }
+
+        val history = GameHistory("./logs/history.log")
+        history.record(result)
+        logged = true
+    }
+
+    private fun displayResult(result: String?) {
+        result?.let { message ->
+            output.println(message)
+        }
+    }
+
+    private fun displayError(message: String?) {
+        message?.let { error ->
+            output.println("\n>> $error <<\nTry again!\n")
+        }
+    }
+
+    private fun checkGameCondition(
+        winCondition: WinCondition,
+        moveResult: MoveResult,
+    ): GameResult {
+        val gameResult = winCondition.check(moveResult.board, moveResult.position)
+        if (gameResult == GameResult.Running) {
+            turn.advance()
+        }
+        return gameResult
     }
 
     private fun updateBoard(board: Board) {
