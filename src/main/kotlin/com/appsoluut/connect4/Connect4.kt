@@ -69,8 +69,8 @@ class Connect4 private constructor(
                         return@let
                     }
                 updateBoard(board)
+                turn.next()
             }
-            turn.next()
             iterations++
         }
     }
