@@ -41,8 +41,9 @@ class Connect4 private constructor(
     }
 
     fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS) {
-        var lastError: String? = null
+        var message: String? = null
         var iterations = 0
+        val winCondition = WinCondition()
         while (maxIterations == INFINITE_ITERATIONS || iterations < maxIterations) {
             val currentPlayer = turn.getCurrentPlayer()
 
@@ -50,10 +51,10 @@ class Connect4 private constructor(
 
             output.println(renderer.renderBoard(board))
 
-            lastError?.let { error ->
+            message?.let { error ->
                 output.println("\n>> $error <<\nTry again!\n")
             }
-            lastError = null
+            message = null
 
             output.println(renderer.renderPlayerTurn(currentPlayer))
 
@@ -61,16 +62,25 @@ class Connect4 private constructor(
             input.readColumn()?.let { column ->
                 val validator = Validator(board)
                 if (!validator.isColumnValid(column)) {
-                    lastError = "[ERROR] Column $column is out of range [1-${board.columns}]!"
+                    message = "[ERROR] Column $column is out of range [1-${board.columns}]!"
                     return@let
                 }
 
-                val board =
+                val moveResult =
                     board.dropCoinIn(currentPlayer.coin(), column).getOrElse {
-                        lastError = "[ERROR] ${it.message}"
+                        message = "[ERROR] ${it.message}"
                         return@let
                     }
-                updateBoard(board)
+
+                updateBoard(moveResult.board)
+
+                if (winCondition.checkHorizontalWin(moveResult.board, moveResult.position) ||
+                    winCondition.checkVerticalWin(moveResult.board, moveResult.position)
+                ) {
+                    message = "Player ${currentPlayer.name} wins!"
+                    return@let
+                }
+
                 turn.advance()
             }
             iterations++

@@ -167,7 +167,7 @@ class BoardTest {
                 updatedBoard.dropCoinIn(
                     coin = Coin.Yellow,
                     column = column,
-                ).getOrThrow()
+                ).getOrThrow().board
         }
 
         assertEquals(expectedPosition, updatedBoard.positionAt(row = positionRow, column = positionColumn))

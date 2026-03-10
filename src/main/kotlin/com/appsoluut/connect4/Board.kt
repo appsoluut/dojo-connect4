@@ -29,10 +29,11 @@ class Board private constructor(
     fun dropCoinIn(
         coin: Coin,
         column: Int,
-    ): Result<Board> {
+    ): Result<MoveResult> {
         for (row in 1..rows) {
             if (isPositionAvailableAt(row, column)) {
-                return Result.success(placeCoinAt(Position(row = row, column = column, coin = coin)))
+                val position = Position(row = row, column = column, coin = coin)
+                return Result.success(MoveResult(board = placeCoinAt(position), position = position))
             }
         }
         return Result.failure(IllegalStateException("Column $column is full."))
@@ -60,3 +61,8 @@ class Board private constructor(
             )
     }
 }
+
+data class MoveResult(
+    val board: Board,
+    val position: Position,
+)
