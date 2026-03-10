@@ -42,6 +42,8 @@ class Connect4 private constructor(
         var iterations = 0
         val turn = Turn()
         while (maxIterations == INFINITE_ITERATIONS || iterations < maxIterations) {
+            val currentPlayer = turn.getCurrentPlayer()
+
             output.clear()
 
             output.println(renderer.renderBoard(board))
@@ -51,6 +53,8 @@ class Connect4 private constructor(
             }
             lastError = null
 
+            output.println(renderer.renderPlayerTurn(currentPlayer))
+
             output.print("Input column: ")
             input.readColumn()?.let { column ->
                 val validator = Validator(board)
@@ -59,9 +63,8 @@ class Connect4 private constructor(
                     return@let
                 }
 
-                val coin = turn.getCurrentPlayer().coin()
                 val board =
-                    board.dropCoinIn(coin, column).getOrElse {
+                    board.dropCoinIn(currentPlayer.coin(), column).getOrElse {
                         lastError = it.message
                         return@let
                     }

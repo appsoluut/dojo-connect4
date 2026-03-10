@@ -8,6 +8,8 @@ class TextRenderer : Renderer {
             Coin.None -> "\u2B55"
         }
 
+    override fun renderPlayerTurn(player: Player): String = "Player ${player.ordinal + 1}'s turn (${renderCoin(player.coin())})"
+
     override fun renderBoard(board: Board): String =
         buildString {
             append(generateColumnsHeader(board)).append('\n')

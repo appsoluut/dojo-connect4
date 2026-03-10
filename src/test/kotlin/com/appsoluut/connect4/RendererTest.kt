@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.EnumSource
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -70,5 +71,19 @@ class RendererTest {
             }
 
         assertEquals(expectedRows, actualRows)
+    }
+
+    @ParameterizedTest
+    @EnumSource(Player::class)
+    @DisplayName("show who's turn it is")
+    fun playerTurnDisplayTest(player: Player) {
+        val renderer = TextRenderer()
+        val expectedTexts =
+            mapOf(
+                Player.First to "Player 1's turn (${renderer.renderCoin(Coin.Yellow)})",
+                Player.Second to "Player 2's turn (${renderer.renderCoin(Coin.Red)})",
+            )
+
+        assertEquals(expectedTexts[player], renderer.renderPlayerTurn(player))
     }
 }
