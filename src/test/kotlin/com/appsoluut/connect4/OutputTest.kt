@@ -53,6 +53,24 @@ class OutputTest {
 
         game.runGameLoop(2)
 
-        assertTrue(output.buffer.contains("[ERROR]", ignoreCase = true), "Output was:\n\n${output.buffer}")
+        assertTrue(output.buffer.contains("Column 0 is out of range", ignoreCase = true), "Output was:\n\n${output.buffer}")
+    }
+
+    @Test
+    @DisplayName("contain an error when full column was selected")
+    fun displayErrorForFullColumn() {
+        val column = 3
+        val input = TerminalInput({ "$column" })
+        val output = FakeOutput()
+        val game =
+            Connect4.newGame(
+                input = input,
+                output = output,
+            )
+
+        game.runGameLoop(1) // Skip intro
+        game.runGameLoop(Board.ROWS + 1)
+
+        assertTrue(output.buffer.contains("Column $column is full", ignoreCase = true), "Output was:\n\n${output.buffer}")
     }
 }

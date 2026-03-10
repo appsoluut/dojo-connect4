@@ -65,7 +65,7 @@ class Connect4 private constructor(
 
                 val board =
                     board.dropCoinIn(currentPlayer.coin(), column).getOrElse {
-                        lastError = it.message
+                        lastError = "[ERROR] ${it.message}"
                         return@let
                     }
                 updateBoard(board)
