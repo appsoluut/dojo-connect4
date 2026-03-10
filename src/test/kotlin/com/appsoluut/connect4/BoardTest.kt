@@ -135,6 +135,42 @@ class BoardTest {
         assertEquals(expectedPosition, position)
     }
 
+    @ParameterizedTest(name = "Input column: {0} => Ends up in position: row {1} x column {2}")
+    @CsvSource(
+        textBlock =
+            """# Drop Column, Row   , Column
+            1               , 1     , 1
+            '1,1'           , 2     , 1""",
+    )
+    @DisplayName("drop coin in column and move it as far as possible to the bottom")
+    fun dropCoinInColumnAndMove(
+        droppedColumn: String,
+        positionRow: Int,
+        positionColumn: Int,
+    ) {
+        val inserts = droppedColumn.split(',').mapNotNull { it.trim().toIntOrNull() }
+
+        val board = Board.empty()
+        val expectedPosition =
+            Position(
+                row = positionRow,
+                column = positionColumn,
+                coin = Coin.Yellow,
+            )
+
+        var updatedBoard = board
+
+        inserts.forEach { column ->
+            updatedBoard =
+                updatedBoard.dropCoinIn(
+                    coin = Coin.Yellow,
+                    column = column,
+                )
+        }
+
+        assertEquals(expectedPosition, updatedBoard.positionAt(row = positionRow, column = positionColumn))
+    }
+
     private class BoardPlayerPositionsArgumentsProvider : ArgumentsProvider {
         override fun provideArguments(context: ExtensionContext?): Stream<out Arguments?>? {
             return Stream.of(

@@ -58,13 +58,7 @@ class Connect4 private constructor(
                     return@let
                 }
 
-                val position =
-                    Position(
-                        column = column,
-                        row = 1,
-                        coin = Coin.Yellow,
-                    )
-                val board = board.placeCoinAt(position)
+                val board = board.dropCoinIn(Coin.Yellow, column)
                 updateBoard(board)
             }
             iterations++

@@ -26,6 +26,18 @@ class Board private constructor(
         column: Int,
     ): Boolean = positions[(row - 1) * columns + (column - 1)].coin == Coin.None
 
+    fun dropCoinIn(
+        coin: Coin,
+        column: Int,
+    ): Board {
+        for (row in 1..rows) {
+            if (isPositionAvailableAt(row, column)) {
+                return placeCoinAt(Position(row = row, column = column, coin = coin))
+            }
+        }
+        return this
+    }
+
     companion object {
         const val ROWS = 6
         const val COLUMNS = 7
