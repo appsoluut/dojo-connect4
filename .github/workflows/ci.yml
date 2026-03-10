@@ -138,5 +138,5 @@ jobs:
         uses: actions/attest-build-provenance@v3
         with:
           subject-name: ${{ env.REGISTRY }}/${{ env.CONTAINER_TAG }}
-          subject-digest: ${{ steps.meta.outputs.tag-names }}
+          subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
