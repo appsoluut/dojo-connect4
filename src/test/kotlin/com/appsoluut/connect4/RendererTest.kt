@@ -13,7 +13,7 @@ class RendererTest {
     @CsvSource(
         value = [
             "1, Yellow",
-            "2, Blue",
+            "2, Red",
             "NoPlayer, None",
         ],
         nullValues = ["NoPlayer"],
@@ -28,7 +28,7 @@ class RendererTest {
         val playerCoinMap =
             mapOf(
                 1 to Coin.Yellow,
-                2 to Coin.Blue,
+                2 to Coin.Red,
                 null to Coin.None,
             )
 
@@ -36,7 +36,7 @@ class RendererTest {
             playerCoinMap[player]?.let { playerCoin ->
                 when (playerCoin) {
                     Coin.Yellow -> "\uD83D\uDFE1"
-                    Coin.Blue -> "\uD83D\uDD34"
+                    Coin.Red -> "\uD83D\uDD34"
                     Coin.None -> "\u2B55"
                 }
             }

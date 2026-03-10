@@ -4,7 +4,7 @@ class TextRenderer : Renderer {
     override fun renderCoin(coin: Coin): String =
         when (coin) {
             Coin.Yellow -> "\uD83D\uDFE1"
-            Coin.Blue -> "\uD83D\uDD34"
+            Coin.Red -> "\uD83D\uDD34"
             Coin.None -> "\u2B55"
         }
 

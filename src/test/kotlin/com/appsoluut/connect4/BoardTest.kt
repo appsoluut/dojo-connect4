@@ -192,7 +192,7 @@ class BoardTest {
         override fun provideArguments(context: ExtensionContext?): Stream<out Arguments?>? {
             return Stream.of(
                 Arguments.of(Coin.Yellow, 1, 1),
-                Arguments.of(Coin.Blue, 1, 2),
+                Arguments.of(Coin.Red, 1, 2),
             )
         }
     }

@@ -40,6 +40,7 @@ class Connect4 private constructor(
     fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS) {
         var lastError: String? = null
         var iterations = 0
+        val turn = Turn()
         while (maxIterations == INFINITE_ITERATIONS || iterations < maxIterations) {
             output.clear()
 
@@ -58,13 +59,20 @@ class Connect4 private constructor(
                     return@let
                 }
 
+                val coin =
+                    when (turn.getCurrentPlayer()) {
+                        Player.First -> Coin.Yellow
+                        Player.Second -> Coin.Red
+                    }
+
                 val board =
-                    board.dropCoinIn(Coin.Yellow, column).getOrElse {
+                    board.dropCoinIn(coin, column).getOrElse {
                         lastError = it.message
                         return@let
                     }
                 updateBoard(board)
             }
+            turn.next()
             iterations++
         }
     }
