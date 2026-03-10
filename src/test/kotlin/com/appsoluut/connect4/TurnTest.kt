@@ -19,7 +19,7 @@ class TurnTest {
         val turn = Turn()
 
         assertTrue { Player.First == turn.getCurrentPlayer() }
-        turn.next()
+        turn.advance()
         assertTrue { Player.Second == turn.getCurrentPlayer() }
     }
 }

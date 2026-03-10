@@ -2,6 +2,7 @@ package com.appsoluut.connect4
 
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @DisplayName("Output should")
@@ -62,15 +63,21 @@ class OutputTest {
         val column = 3
         val input = TerminalInput({ "$column" })
         val output = FakeOutput()
+        val turn = Turn()
         val game =
             Connect4.newGame(
+                turn = turn,
                 input = input,
                 output = output,
             )
 
         game.runGameLoop(1) // Skip intro
-        game.runGameLoop(Board.ROWS + 1)
+        game.runGameLoop(Board.ROWS)
+        val lastPlayer = turn.getCurrentPlayer()
+
+        game.runGameLoop(2)
 
         assertTrue(output.buffer.contains("Column $column is full", ignoreCase = true), "Output was:\n\n${output.buffer}")
+        assertEquals(lastPlayer, turn.getCurrentPlayer())
     }
 }

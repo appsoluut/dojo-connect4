@@ -1,6 +1,7 @@
 package com.appsoluut.connect4
 
 class Connect4 private constructor(
+    private val turn: Turn,
     private val renderer: Renderer,
     private val input: Input,
     private val output: Output,
@@ -10,11 +11,13 @@ class Connect4 private constructor(
         const val INFINITE_ITERATIONS = -1
 
         fun newGame(
+            turn: Turn = Turn(),
             renderer: Renderer = TextRenderer(),
             input: Input = TerminalInput(),
             output: Output = TerminalOutput(),
         ): Connect4 =
             Connect4(
+                turn = turn,
                 renderer = renderer,
                 input = input,
                 output = output,
@@ -40,7 +43,6 @@ class Connect4 private constructor(
     fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS) {
         var lastError: String? = null
         var iterations = 0
-        val turn = Turn()
         while (maxIterations == INFINITE_ITERATIONS || iterations < maxIterations) {
             val currentPlayer = turn.getCurrentPlayer()
 
@@ -69,7 +71,7 @@ class Connect4 private constructor(
                         return@let
                     }
                 updateBoard(board)
-                turn.next()
+                turn.advance()
             }
             iterations++
         }

@@ -5,7 +5,7 @@ class Turn {
 
     fun getCurrentPlayer(): Player = currentPlayer
 
-    fun next() {
+    fun advance() {
         val players = Player.entries
         currentPlayer = players[(currentPlayer.ordinal + 1) % players.size]
     }
