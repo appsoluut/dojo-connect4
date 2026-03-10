@@ -36,9 +36,6 @@ USER games
 
 WORKDIR /app
 
-RUN apt-get update -y \
-    && apt-get upgrade -y
-
 COPY --from=build /build/dist/. .
 
 ENTRYPOINT ["./bin/Connect4"]
