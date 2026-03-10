@@ -7,15 +7,22 @@ class DiagonalWinStrategy : WinStrategy {
     override fun invoke(
         board: Board,
         position: Position,
-    ): Boolean {
+    ): GameResult {
         val directions = listOf(1, -1)
-        return directions.any { rowDelta ->
-            countConsecutive(
-                board = board,
-                position = position,
-                rowDelta = rowDelta,
-            ) == WinCondition.CONSECUTIVE_COINS
-        }
+        val result =
+            if (directions.any { rowDelta ->
+                    countConsecutive(
+                        board = board,
+                        position = position,
+                        rowDelta = rowDelta,
+                    ) == WinCondition.CONSECUTIVE_COINS
+                }
+            ) {
+                GameResult.Win
+            } else {
+                GameResult.Running
+            }
+        return result
     }
 
     private fun countConsecutive(

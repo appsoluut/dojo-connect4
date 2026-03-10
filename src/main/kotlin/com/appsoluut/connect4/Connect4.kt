@@ -1,5 +1,6 @@
 package com.appsoluut.connect4
 
+import com.appsoluut.connect4.win.GameResult
 import com.appsoluut.connect4.win.WinCondition
 
 class Connect4 private constructor(
@@ -44,6 +45,7 @@ class Connect4 private constructor(
 
     fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS) {
         var message: String? = null
+        var gameResult: GameResult = GameResult.Running
         var iterations = 0
         val winCondition = WinCondition()
         while (maxIterations == INFINITE_ITERATIONS || iterations < maxIterations) {
@@ -52,6 +54,14 @@ class Connect4 private constructor(
             output.clear()
 
             output.println(renderer.renderBoard(board))
+
+            if (gameResult == GameResult.Win) {
+                output.println("Player ${currentPlayer.ordinal + 1} wins!")
+                return
+            } else if (gameResult == GameResult.Draw) {
+                output.println("It's a draw!")
+                return
+            }
 
             message?.let { error ->
                 output.println("\n>> $error <<\nTry again!\n")
@@ -76,12 +86,10 @@ class Connect4 private constructor(
 
                 updateBoard(moveResult.board)
 
-                if (winCondition.check(moveResult.board, moveResult.position)) {
-                    message = "Player ${currentPlayer.name} wins!"
-                    return@let
+                gameResult = winCondition.check(moveResult.board, moveResult.position)
+                if (gameResult == GameResult.Running) {
+                    turn.advance()
                 }
-
-                turn.advance()
             }
             iterations++
         }

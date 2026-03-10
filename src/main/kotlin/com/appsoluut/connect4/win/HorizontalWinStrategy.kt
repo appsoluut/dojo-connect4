@@ -7,19 +7,19 @@ class HorizontalWinStrategy : WinStrategy {
     override fun invoke(
         board: Board,
         position: Position,
-    ): Boolean {
+    ): GameResult {
         var consecutive = 0
         for (column in 1..board.columns) {
             val coin = board.positionAt(row = position.row, column = column).coin
             if (coin == position.coin) {
                 consecutive++
                 if (consecutive == WinCondition.CONSECUTIVE_COINS) {
-                    return true
+                    return GameResult.Win
                 }
             } else {
                 consecutive = 0
             }
         }
-        return false
+        return GameResult.Running
     }
 }

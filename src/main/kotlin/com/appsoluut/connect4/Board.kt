@@ -12,6 +12,8 @@ class Board private constructor(
 
     fun isEmpty(): Boolean = positions.all { it.coin == Coin.None }
 
+    fun isFull(): Boolean = !positions.any { it.coin == Coin.None }
+
     fun placeCoinAt(position: Position): Board {
         val mutablePositions = positions.toMutableList()
         mutablePositions.set(
