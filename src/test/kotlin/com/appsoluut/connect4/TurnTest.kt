@@ -12,4 +12,14 @@ class TurnTest {
         val turn = Turn()
         assertTrue(Player.First == turn.getCurrentPlayer())
     }
+
+    @Test
+    @DisplayName("alternate between active players")
+    fun alternateActivePlayers() {
+        val turn = Turn()
+
+        assertTrue { Player.First == turn.getCurrentPlayer() }
+        turn.next()
+        assertTrue { Player.Second == turn.getCurrentPlayer() }
+    }
 }
