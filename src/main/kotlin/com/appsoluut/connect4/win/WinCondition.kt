@@ -8,6 +8,7 @@ class WinCondition(
         listOf(
             HorizontalWinStrategy(),
             VerticalWinStrategy(),
+            DiagonalWinStrategy(),
         ),
 ) {
     fun check(

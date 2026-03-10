@@ -94,4 +94,34 @@ class WinConditionTest {
 
         assertFalse(winCondition.check(board, lastPosition))
     }
+
+    @Test
+    @DisplayName("check if 4 of the same coins are in a diagonal position (/)")
+    fun diagonalWinBottomLeftBottomToTopRight() {
+        val winCondition = WinCondition()
+
+        var board = Board.empty()
+        board = board.placeCoinAt(Position(row = 1, column = 1, coin = Coin.Yellow))
+        board = board.placeCoinAt(Position(row = 2, column = 2, coin = Coin.Yellow))
+        board = board.placeCoinAt(Position(row = 3, column = 3, coin = Coin.Yellow))
+        val lastPosition = Position(row = 4, column = 4, coin = Coin.Yellow)
+        board = board.placeCoinAt(lastPosition)
+
+        assertTrue(winCondition.check(board, lastPosition))
+    }
+
+    @Test
+    @DisplayName("check if 4 of the same coins are in a diagonal position (\\)")
+    fun diagonalWinBottomLeftTopToBottomRight() {
+        val winCondition = WinCondition()
+
+        var board = Board.empty()
+        board = board.placeCoinAt(Position(row = 5, column = 2, coin = Coin.Yellow))
+        board = board.placeCoinAt(Position(row = 4, column = 3, coin = Coin.Yellow))
+        board = board.placeCoinAt(Position(row = 3, column = 4, coin = Coin.Yellow))
+        val lastPosition = Position(row = 2, column = 5, coin = Coin.Yellow)
+        board = board.placeCoinAt(lastPosition)
+
+        assertTrue(winCondition.check(board, lastPosition))
+    }
 }
