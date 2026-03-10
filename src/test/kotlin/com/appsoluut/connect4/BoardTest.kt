@@ -140,7 +140,8 @@ class BoardTest {
         textBlock =
             """# Drop Column, Row   , Column
             1               , 1     , 1
-            '1,1'           , 2     , 1""",
+            '1,1'           , 2     , 1
+            '1,3,4,4'       , 2     , 4""",
     )
     @DisplayName("drop coin in column and move it as far as possible to the bottom")
     fun dropCoinInColumnAndMove(
