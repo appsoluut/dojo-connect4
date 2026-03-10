@@ -7,5 +7,9 @@ interface Renderer {
 
     fun renderBoard(board: Board): String
 
+    fun renderWin(player: Player): String
+
+    fun renderDraw(): String
+
     fun renderInstructions(board: Board): String
 }

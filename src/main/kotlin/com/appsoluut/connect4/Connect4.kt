@@ -29,11 +29,17 @@ class Connect4 private constructor(
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val game = newGame()
+            var game = newGame()
             if ("q".equals(game.intro(), ignoreCase = true)) {
                 return
             }
-            game.runGameLoop()
+            var stop: Boolean
+            do {
+                stop = game.runGameLoop()
+                if (!stop) {
+                    game = newGame()
+                }
+            } while (!stop)
         }
     }
 
@@ -43,7 +49,7 @@ class Connect4 private constructor(
         return input.readln()
     }
 
-    fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS) {
+    fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS): Boolean {
         var message: String? = null
         var gameResult: GameResult = GameResult.Running
         var iterations = 0
@@ -56,11 +62,19 @@ class Connect4 private constructor(
             output.println(renderer.renderBoard(board))
 
             if (gameResult == GameResult.Win) {
-                output.println("Player ${currentPlayer.ordinal + 1} wins!")
-                return
+                output.println(renderer.renderWin(player = currentPlayer))
             } else if (gameResult == GameResult.Draw) {
-                output.println("It's a draw!")
-                return
+                output.println(renderer.renderDraw())
+            }
+
+            if (gameResult != GameResult.Running) {
+                output.print("Play again? (yes/no): ")
+                val answer = input.readln()?.trim()?.lowercase()
+                return when (answer) {
+                    "yes" -> false
+                    "no" -> true
+                    else -> continue
+                }
             }
 
             message?.let { error ->
@@ -93,6 +107,7 @@ class Connect4 private constructor(
             }
             iterations++
         }
+        return false
     }
 
     private fun updateBoard(board: Board) {

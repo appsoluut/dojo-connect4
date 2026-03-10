@@ -16,6 +16,10 @@ class TextRenderer : Renderer {
             append(generateBoardWithRowNumbers(board)).append('\n')
         }.trimEnd()
 
+    override fun renderWin(player: Player): String = "Player ${player.ordinal + 1} wins with 4 in a row!"
+
+    override fun renderDraw(): String = "Game is a Draw - All positions filled!"
+
     override fun renderInstructions(board: Board): String =
         """
         Welcome to Connect 4!
