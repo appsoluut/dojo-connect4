@@ -58,7 +58,11 @@ class Connect4 private constructor(
                     return@let
                 }
 
-                val board = board.dropCoinIn(Coin.Yellow, column)
+                val board =
+                    board.dropCoinIn(Coin.Yellow, column).getOrElse {
+                        lastError = it.message
+                        return@let
+                    }
                 updateBoard(board)
             }
             iterations++

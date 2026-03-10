@@ -29,13 +29,13 @@ class Board private constructor(
     fun dropCoinIn(
         coin: Coin,
         column: Int,
-    ): Board {
+    ): Result<Board> {
         for (row in 1..rows) {
             if (isPositionAvailableAt(row, column)) {
-                return placeCoinAt(Position(row = row, column = column, coin = coin))
+                return Result.success(placeCoinAt(Position(row = row, column = column, coin = coin)))
             }
         }
-        return this
+        return Result.failure(IllegalStateException("Column $column is full."))
     }
 
     companion object {

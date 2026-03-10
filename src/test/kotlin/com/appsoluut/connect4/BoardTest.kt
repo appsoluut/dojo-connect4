@@ -3,6 +3,7 @@ package com.appsoluut.connect4
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -166,10 +167,25 @@ class BoardTest {
                 updatedBoard.dropCoinIn(
                     coin = Coin.Yellow,
                     column = column,
-                )
+                ).getOrThrow()
         }
 
         assertEquals(expectedPosition, updatedBoard.positionAt(row = positionRow, column = positionColumn))
+    }
+
+    @Test
+    @DisplayName("reject a coin in a full column and provide error")
+    fun dropCoinInFullColumnAndReportError() {
+        var board = Board.empty()
+        val dropInColumn = 1
+        for (row in 1..board.rows) {
+            board = board.placeCoinAt(Position(row = row, column = dropInColumn, coin = Coin.Yellow))
+        }
+
+        val result = board.dropCoinIn(Coin.Yellow, dropInColumn)
+
+        assertTrue(result.isFailure)
+        assertThrows<IllegalStateException> { result.getOrThrow() }
     }
 
     private class BoardPlayerPositionsArgumentsProvider : ArgumentsProvider {
