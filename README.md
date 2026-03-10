@@ -4,6 +4,8 @@
 
 A Kotlin project bootstrapped with **Gradle**, **Detekt**, **Ktlint**, **JUnit**, and **JaCoCo**.
 
+Running the immensely popular 4-in-a-row game!
+
 ## 🚀 Features
 
 - 🔧 Gradle wrapper included
@@ -24,12 +26,48 @@ cd Connect4
 # Build and test
 ./gradlew build test
 
+# Build fat jar
+./gradlew shadowJar
+
+# Build distribution
+./gradlew shadowDistZip
+
 # Run Detekt and Ktlint checks
 ./gradlew detekt ktlintCheck
 
 # Run
 ./gradlew run
 ```
+
+# Git hook
+
+The GitHub actions will validate if the Ktlint Format is used. To make sure that you don't accidentally push
+a commit which would fail this quick check, you can register a Git hook by running the following Gradle command:
+
+```bash
+./gradlew :addKtLintCheckGitPreCommitHook
+```
+
+Commits will fail now if the Ktlint Checks don't pass first.
+
+# Docker
+
+There is a Docker image available. You can run it in interactive mode (to play the game) with the following command:
+
+```bash
+docker pull ghcr.io/appsoluut/dojo-connect4:latest
+docker run --rm -it ghcr.io/appsoluut/dojo-connect4:latest
+```
+
+The game also logs the game history to `./logs/history.log`. If you wish to persist the file, use the `-v` option of
+Docker. For example:
+
+```bash
+# Store the logs under the current working directory /logs
+docker run -it -v "$(pwd)/logs":/app/logs ghcr.io/appsoluut/dojo-connect4:latest
+```
+
+*Note:* Make sure the logs directory is created on your host and writeable by Docker
 
 # License
 
