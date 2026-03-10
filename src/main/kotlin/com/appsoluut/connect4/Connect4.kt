@@ -52,8 +52,10 @@ class Connect4 private constructor(
     fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS): Boolean {
         var message: String? = null
         var gameResult: GameResult = GameResult.Running
+        val history = GameHistory("./logs/history.log")
         var iterations = 0
         val winCondition = WinCondition()
+        var logged = false
         while (maxIterations == INFINITE_ITERATIONS || iterations < maxIterations) {
             val currentPlayer = turn.getCurrentPlayer()
 
@@ -61,13 +63,21 @@ class Connect4 private constructor(
 
             output.println(renderer.renderBoard(board))
 
-            if (gameResult == GameResult.Win) {
-                output.println(renderer.renderWin(player = currentPlayer))
-            } else if (gameResult == GameResult.Draw) {
-                output.println(renderer.renderDraw())
-            }
+            val result =
+                when (gameResult) {
+                    GameResult.Win -> renderer.renderWin(player = currentPlayer)
+                    GameResult.Draw -> renderer.renderDraw()
+                    else -> null
+                }
 
             if (gameResult != GameResult.Running) {
+                if (result != null) {
+                    if (!logged) {
+                        history.record(result)
+                        logged = true
+                    }
+                    output.println(result)
+                }
                 output.print("Play again? (yes/no): ")
                 val answer = input.readln()?.trim()?.lowercase()
                 return when (answer) {
