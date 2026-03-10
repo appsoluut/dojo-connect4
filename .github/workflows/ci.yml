@@ -76,6 +76,11 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
     steps:
       - name: Login to Docker Github
         uses: docker/login-action@v3
@@ -128,7 +133,6 @@ jobs:
           args: --file=${{ env.CONTEXT }}/Dockerfile
         continue-on-error: true # No paid snyk account to actually upload the report
 
-      # Attestation can only work with paid plan or public repositories, so commented out for now
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v3
         with:
