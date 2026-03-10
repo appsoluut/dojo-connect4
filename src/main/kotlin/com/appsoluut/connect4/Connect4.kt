@@ -59,12 +59,7 @@ class Connect4 private constructor(
                     return@let
                 }
 
-                val coin =
-                    when (turn.getCurrentPlayer()) {
-                        Player.First -> Coin.Yellow
-                        Player.Second -> Coin.Red
-                    }
-
+                val coin = turn.getCurrentPlayer().coin()
                 val board =
                     board.dropCoinIn(coin, column).getOrElse {
                         lastError = it.message
