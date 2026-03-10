@@ -14,9 +14,10 @@ class WinCondition(
     fun check(
         board: Board,
         position: Position,
-    ): Boolean {
-        return strategies.any { it(board, position) }
-    }
+    ): Boolean =
+        strategies.any { strategy ->
+            strategy(board, position)
+        }
 
     companion object {
         const val CONSECUTIVE_COINS = 4
