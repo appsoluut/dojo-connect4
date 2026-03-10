@@ -1,5 +1,6 @@
 package com.appsoluut.connect4
 
+import com.appsoluut.connect4.win.WinCondition
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
@@ -31,7 +32,7 @@ class WinConditionTest {
             board = board.placeCoinAt(position)
         }
 
-        assertTrue(winCondition.checkHorizontalWin(board, position))
+        assertTrue(winCondition.check(board, position))
     }
 
     @Test
@@ -48,7 +49,7 @@ class WinConditionTest {
         val lastPosition = Position(row = 2, column = startColumn + 5, coin = Coin.Yellow)
         board = board.placeCoinAt(lastPosition)
 
-        assertFalse(winCondition.checkHorizontalWin(board, lastPosition))
+        assertFalse(winCondition.check(board, lastPosition))
     }
 
     @Test
@@ -75,7 +76,7 @@ class WinConditionTest {
             board = board.placeCoinAt(position)
         }
 
-        assertTrue(winCondition.checkVerticalWin(board, position))
+        assertTrue(winCondition.check(board, position))
     }
 
     @Test
@@ -91,6 +92,6 @@ class WinConditionTest {
         val lastPosition = Position(row = 5, column = 2, coin = Coin.Yellow)
         board = board.placeCoinAt(lastPosition)
 
-        assertFalse(winCondition.checkVerticalWin(board, lastPosition))
+        assertFalse(winCondition.check(board, lastPosition))
     }
 }

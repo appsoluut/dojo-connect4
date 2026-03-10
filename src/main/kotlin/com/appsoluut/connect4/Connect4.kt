@@ -1,5 +1,7 @@
 package com.appsoluut.connect4
 
+import com.appsoluut.connect4.win.WinCondition
+
 class Connect4 private constructor(
     private val turn: Turn,
     private val renderer: Renderer,
@@ -74,9 +76,7 @@ class Connect4 private constructor(
 
                 updateBoard(moveResult.board)
 
-                if (winCondition.checkHorizontalWin(moveResult.board, moveResult.position) ||
-                    winCondition.checkVerticalWin(moveResult.board, moveResult.position)
-                ) {
+                if (winCondition.check(moveResult.board, moveResult.position)) {
                     message = "Player ${currentPlayer.name} wins!"
                     return@let
                 }
