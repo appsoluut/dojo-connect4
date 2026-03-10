@@ -126,6 +126,7 @@ jobs:
         with:
           image: ${{ steps.meta.outputs.tags }}
           args: --file=${{ env.CONTEXT }}/Dockerfile
+        continue-on-error: true # No paid snyk account to actually upload the report
 
       # Attestation can only work with paid plan or public repositories, so commented out for now
       - name: Generate artifact attestation
