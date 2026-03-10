@@ -101,7 +101,7 @@ jobs:
 
       - name: Test Docker image
         run: |
-          echo q | docker run --rm ${{ env.TEST_TAG }}
+          echo q | docker run --rm -i ${{ env.TEST_TAG }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
