@@ -8,26 +8,24 @@ class DiagonalWinStrategy : WinStrategy {
         board: Board,
         position: Position,
     ): Boolean {
-        if (countConsecutive(board = board, position = position, rowDelta = 1, colDelta = 1) == WinCondition.CONSECUTIVE_COINS) {
-            return true
+        val directions = listOf(1, -1)
+        return directions.any { rowDelta ->
+            countConsecutive(
+                board = board,
+                position = position,
+                rowDelta = rowDelta,
+            ) == WinCondition.CONSECUTIVE_COINS
         }
-
-        if (countConsecutive(board = board, position = position, rowDelta = -1, colDelta = 1) == WinCondition.CONSECUTIVE_COINS) {
-            return true
-        }
-
-        return false
     }
 
     private fun countConsecutive(
         board: Board,
         position: Position,
         rowDelta: Int,
-        colDelta: Int,
     ): Int {
         var consecutive = 1
-        consecutive += countDirection(board, position, rowDelta, colDelta)
-        consecutive += countDirection(board, position, -rowDelta, -colDelta)
+        consecutive += countDirection(board, position, rowDelta, 1)
+        consecutive += countDirection(board, position, -rowDelta, -1)
         return consecutive
     }
 
