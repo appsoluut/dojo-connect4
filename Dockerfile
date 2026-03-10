@@ -20,7 +20,6 @@ COPY src ./src
 RUN ./gradlew check shadowDistZip
 
 RUN apt-get update -y \
-    && apt-get -y upgrade \
     && apt-get install unzip -y \
     && unzip ./build/distributions/Connect4-*.zip -d dist \
     && mv dist/Connect4-*/* dist/ \
@@ -36,6 +35,9 @@ LABEL authors="appsoluut"
 USER games
 
 WORKDIR /app
+
+RUN apt-get update -y \
+    && apt-get upgrade -y
 
 COPY --from=build /build/dist/. .
 
