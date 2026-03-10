@@ -31,6 +31,8 @@ class Connect4Test {
     }
 
     private class DummyInput : Input {
+        override fun readln(): String? = null
+
         override fun readColumn(): Int? = null
     }
 }

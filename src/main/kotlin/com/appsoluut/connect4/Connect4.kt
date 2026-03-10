@@ -24,15 +24,17 @@ class Connect4 private constructor(
         @JvmStatic
         fun main(args: Array<String>) {
             val game = newGame()
-            game.intro()
+            if ("q".equals(game.intro(), ignoreCase = true)) {
+                return
+            }
             game.runGameLoop()
         }
     }
 
-    fun intro() {
+    fun intro(): String? {
         output.clear()
         output.println(renderer.renderInstructions(board))
-        input.readColumn()
+        return input.readln()
     }
 
     fun runGameLoop(maxIterations: Int = INFINITE_ITERATIONS) {

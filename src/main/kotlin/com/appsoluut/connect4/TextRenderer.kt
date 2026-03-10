@@ -30,7 +30,7 @@ class TextRenderer : Renderer {
         
         A draw will occur when the board is full and no win condition has been met.
         
-        - Press ENTER to start the game -
+        - Press ENTER to start the game or 'q' to quit -
         """.trimIndent()
 
     private fun generateColumnsHeader(board: Board): String {

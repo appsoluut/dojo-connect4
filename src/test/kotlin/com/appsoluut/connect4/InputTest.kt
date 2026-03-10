@@ -2,12 +2,21 @@ package com.appsoluut.connect4
 
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @DisplayName("Input should")
 class InputTest {
+    @Test
+    @DisplayName("accept and validate column 4 from input if in range")
+    fun acceptStringInput() {
+        val input = TerminalInput({ "q" }).readln()
+        assertNotNull(input)
+        assertEquals("q", input)
+    }
+
     @Test
     @DisplayName("accept and validate column 4 from input if in range")
     fun validateValidColumn() {
