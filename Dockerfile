@@ -20,7 +20,7 @@ RUN apt-get update -y \
     && rm -rf dist/Connect4-*/
 
 ## Connect 4 resulting image
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre-jammy
 
 # Attach to GitHub repository for better traceability
 LABEL org.opencontainers.image.source=https://github.com/appsoluut/dojo-connect4
