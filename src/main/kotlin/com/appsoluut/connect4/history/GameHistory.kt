@@ -1,20 +1,18 @@
-package com.appsoluut.connect4
+package com.appsoluut.connect4.history
 
-import java.io.File
+import java.time.Clock
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class GameHistory(
-    val file: String,
+    private val logWriter: LogWriter,
+    private val clock: Clock = Clock.systemDefaultZone(),
 ) {
     fun record(input: String) {
-        val log = File(file)
-        log.parentFile?.mkdirs()
-
-        val currentTime = LocalDateTime.now()
+        val currentTime = LocalDateTime.now(clock)
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val timestamp = currentTime.format(formatter)
 
-        log.appendText("[$timestamp] $input\n")
+        logWriter.writeln("[$timestamp] $input")
     }
 }

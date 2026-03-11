@@ -1,7 +1,11 @@
 package com.appsoluut.connect4
 
+import com.appsoluut.connect4.history.FileLogWriter
+import com.appsoluut.connect4.history.GameHistory
+import com.appsoluut.connect4.history.LogWriter
 import com.appsoluut.connect4.win.GameResult
 import com.appsoluut.connect4.win.WinCondition
+import java.io.File
 
 class Connect4 private constructor(
     private val turn: Turn,
@@ -11,6 +15,7 @@ class Connect4 private constructor(
     private var board: Board,
 ) {
     private var logged: Boolean = false
+    private val logWriter: LogWriter = FileLogWriter(file = File("./logs/history.log"))
 
     companion object {
         const val INFINITE_ITERATIONS = -1
@@ -116,7 +121,7 @@ class Connect4 private constructor(
             return
         }
 
-        val history = GameHistory("./logs/history.log")
+        val history = GameHistory(logWriter = logWriter)
         history.record(result)
         logged = true
     }
