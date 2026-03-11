@@ -67,7 +67,11 @@ Docker. For example:
 docker run -it -v "$(pwd)/logs":/app/logs ghcr.io/appsoluut/dojo-connect4:latest
 ```
 
-*Note:* Make sure the logs directory is created on your host and writeable by Docker
+**Note:** Make sure the logs directory is created on your host and writeable by Docker
+
+To build your own image, simply run `docker build -t <your-image>`.
+
+To run that container, run `docker run it <your-image>`.
 
 # License
 
