@@ -2,6 +2,7 @@
 /build
 /.idea
 /.kotlin
+/logs/*.log
 *.iml
 /out
 gradle.properties
