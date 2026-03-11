@@ -26,7 +26,8 @@ FROM eclipse-temurin:17-jre-jammy
 LABEL org.opencontainers.image.source=https://github.com/appsoluut/dojo-connect4
 LABEL authors="appsoluut"
 
-RUN apk upgrade
+RUN apt-get update \
+    && apt-get upgrade -y
 
 USER games
 
